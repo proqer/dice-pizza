@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DicePizza</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery-3.4.0.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container d-flex justify-content-between">
+                <a class="navbar-brand" href="/">
+                    <img src="/img/dice-white.svg" alt="Logo" class="image-fluid" width="45">
+                    DicePizza
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar1">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item <%= path == '/' ? 'active' : '' %>">
+                            <a class="nav-link" href="/">Главная</a>
+                        </li>
+                        <% if (auth && user.user_is_admin) { %>
+                        <li class="nav-item <%= path == '/admin' ? 'active' : '' %>">
+                            <a class="nav-link" href="/admin">Панель управления</a>
+                         </li>
+                        <% } %>
+                    </ul>
+                    <div class="btn-group mr-2" role="group">
+                        <a href="/cart" class="btn btn-light my-2 my-sm-0">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Корзина
+                            <% if (locals.cart.length === 0) { %>
+                                пустая
+                            <% } else { %>
+                                <span class="badge badge-primary"><%= locals.cart.length %></span>
+                            <% } %>
+                        </a>
+                    </div>
+                    <% if (!locals.auth) {%>
+                    <div class="btn-group">
+                        <a href="/login" class="btn btn-primary ">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i> Войти
+                        </a>
+                    </div>
+                    <% } else { %>
+                    <div class="btn-group mr-2">
+                        <a href="/me" class="btn btn-light">
+                            <i class="fa fa-user" aria-hidden="true"></i> Добрый день, <%= user.user_name %>
+                        </a>
+                    </div>
+                    <form action="/logout" method="POST">
+                        <div class="btn-group">
+                            <button class="btn btn-danger">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <% } %>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <% if(auth && user.user_is_admin) { %>
+        <div class="w-100 py-1 bg-primary text-center text-white"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Вы вошли как администратор</div>
+        <% } %>

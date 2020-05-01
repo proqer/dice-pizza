@@ -1,0 +1,71 @@
+<% include header %>
+<div>
+   <div class="py-5 bg-light">
+      <div class="container">
+         <div class="display-4 mb-3 text-center">Оформление заказа</div>
+         <div class="row justify-content-center align-items-center text-center">
+            <div class="col">
+               <div class="card card-body">
+                  <div class="row">
+                     <div class="col-md-4 order-md-2 mb-4">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                           <span class="text-muted">Ваша корзина</span>
+                           <span class="badge badge-secondary badge-pill"><%= locals.cart.length %></span>
+                        </h4>
+                        <ul class="list-group mb-3">
+                           <% pizzasInfo.forEach(pizza => { %>
+                              <li class="list-group-item d-flex justify-content-between lh-condensed text-left">
+                                 <div>
+                                    <h6 class="my-0"><%= pizza.pizza_name %></h6>
+                                    <small class="text-muted">Размер: <%= pizza.size_value %> | Кол-во: <%= pizza.quantity %></small>
+                                 </div>
+                                 <div>
+                                    <span class="text-muted"><%= (pizza.pizza_price * pizza.quantity).toFixed(2) %> грн.</span>
+                                    <form method="POST" action="/cart/delete">
+                                       <input type="hidden" name="pizza_id" value="<%= pizza.pizza_title_id %>">
+                                       <input type="hidden" name="size_id" value="<%= pizza.pizza_size_id %>">
+                                       <button type="submit" class="badge badge-danger pull-right"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                 </div>
+                              </li>
+                           <% }) %>
+                           <li class="list-group-item d-flex justify-content-between lh-condensed text-left">
+                              <div>
+                                 <h6 class="my-0">Доставка</h6>
+                                 <small class="text-muted">до дверей</small>
+                              </div>
+                              <span class="text-muted">Бесплатно</span>
+                           </li>
+                           <li class="list-group-item d-flex justify-content-between">
+                              <span>Всего (ГРН)</span>
+                              <strong><%= sum.toFixed(2) %></strong>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="col-md-8 order-md-1">
+                        <form method="POST" action="/cart/order">
+                           <div class="mb-3">
+                              <label for="phone">Телефон</label>
+                              <input type="text" class="form-control" name="phone" id="phone" value="<%= user && user.user_phone %>" placeholder="" required="">
+                           </div>
+                           <div class="mb-3">
+                              <label for="address">Адрес доставки</label>
+                              <input type="text" class="form-control" name="address" id="address" value="<%= user && user.user_address %>" placeholder="" required="">
+                           </div>
+                           <div class="mb-3">
+                              <label for="comment">Комментарий к заказу</label>
+                              <input type="text" class="form-control" name="comment" id="comment" placeholder="">
+                           </div>
+                           <hr class="mb-4">
+                           <button class="btn btn-primary btn-lg btn-block" type="submit"><i
+                              class="fa fa-shopping-cart" aria-hidden="true"></i> Заказать</button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<% include footer %>

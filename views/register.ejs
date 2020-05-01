@@ -1,0 +1,61 @@
+<% include header %>
+<div>
+    <div class="py-5 bg-light">
+        <div class="container">
+            <div class="display-4 mb-3 text-center">Зарегистрироваться</div>
+            <div class="row justify-content-center align-items-center text-center">
+                <div class="col-md-6">
+                    <div class="card card-body">
+                        <% if (locals.errors) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <ul class="mb-0">
+                                <% errors.forEach(error => { %>
+                                    <li><%= error %></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                        <% } %>
+                        <form action="/register" method="POST">
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="text" placeholder="Ваше имя"
+                                    name="name" value="<%= locals.name && name %>">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="text" placeholder="Ваша фамилия"
+                                    name="surname" value="<%= locals.surname && surname %>">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="text" placeholder="Ваше отчество"
+                                    name="patronymic" value="<%= locals.patronymic && patronymic %>">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="phone" placeholder="Ваш телефон"
+                                    name="phone"  minlength="4" value="<%= locals.phone && phone %>">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="text" placeholder="Ваш адрес"
+                                    name="address" value="<%= locals.address && address %>">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="text" placeholder="Логин"
+                                    name="login" value="<%= locals.login && login %>">
+                                <small class="form-text text-muted">Придумайте свое имя пользователя, которое вы будете
+                                    использовать для входа.</small>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="password" placeholder="Пароль"
+                                    name="password" minlength="8">
+                                <small class="form-text text-muted">Никому не сообщайте пароль.</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100"><i class="fa fa-user-plus"
+                                    aria-hidden="true"></i> Зарегистрироваться</button>
+                        </form>
+                        <hr>
+                        <p>Зарегистрированы? <a href="/login">Войдите</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include footer %>

@@ -1,0 +1,48 @@
+<% include header %>
+<div>
+    <div class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-12">
+                    <div class="card card-body shadow-sm">
+                        <img class="d-block w-100" src="/img/pizza_big<%= pizza.title_id %>.jpg" alt="Пицца">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="card card-body shadow-sm">
+                        <h5 class="card-title">Пицца <%= pizza.name.toLowerCase() %></h5>
+                        <p><i class="fa fa-align-justify" aria-hidden="true"></i> <%= pizza.description %></p>
+                        <p>
+                            <i class="fa fa-cutlery" aria-hidden="true"></i> Индгредиенты:
+                            <ul>
+                                <% pizza.ingredients.forEach(ingr => { %>
+                                <li><%= ingr %></li>
+                                <% }) %>
+                            </ul>
+                        </p>
+                        <form action="/cart/add" method="POST">
+                            <input type="hidden" name="type" value="pizza">
+                            <input type="hidden" name="id" value="<%= pizza.title_id %>">
+                            <div><span class="h6"><i class="fa fa-arrows-alt" aria-hidden="true"></i> Выберите размер:</span></div>
+                            <% pizza.sizes.forEach((size, index) => { %>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="size_id" id="size-<%= size.id %>"
+                                    value="<%= size.id %>" <% if (index == 0) { %>checked<% } %>>
+                                <label class="form-check-label" for="size-<%= size.id %>"><%= size.value %> - <span class="font-weight-bold"><%= pizza.prices[index].toFixed(2) %></span> грн.</label>
+                            </div>
+                            <% }) %>
+                            <div class="mt-2 mb-1"><span class="h6"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Выберите кол-во:</span></div>
+                            <input type="number" name="quantity" min="1" max="100" value="1">
+                            <div class="my-2">
+                                <button type="submit" class="btn btn-outline-primary w-100">
+                                    <i class="fa fa-cart-plus" aria-hidden="true"></i> В корзину</button>
+                                </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include footer %>
